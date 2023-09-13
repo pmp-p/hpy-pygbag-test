@@ -21,6 +21,16 @@ rm  -rf hpy-pygbag/hpy hpy-pygbag/*so hpy-pygbag/*map
 mv -v hpy/build/lib.wasm32-*-emscripten-cpython-311/hpy hpytest-module/build/lib.wasm32-*-emscripten-cpython-311/*  hpy-pygbag/
 
 
-( sleep 3 && xdg-open "http://localhost:8000?-i" )&
+if [ -f /pp ]
+then
 
-pygbag --ume_block 0 --template noctx.tmpl --cdn https://pygame-web.github.io/showroom/dev/ hpy-pygbag/main.py
+    PYTHONPATH=/data/git/pygbag \
+     py -m pygbag --ume_block 0 --dev --git --template noctx.tmpl /data/git/pygbag/src/hpy/hpy-pygbag-test/hpy-pygbag/main.py
+
+else
+
+    ( sleep 3 && xdg-open "http://localhost:8000?-i" )&
+
+    pygbag --ume_block 0 --template noctx.tmpl --git hpy-pygbag/main.py
+
+fi
